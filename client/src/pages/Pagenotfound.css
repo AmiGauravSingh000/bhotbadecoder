@@ -1,0 +1,29 @@
+/* Pagenotfound.css */
+.container {
+    margin-top: 100px;
+  }
+  
+  .text-warning {
+    color: #000000 !important;
+  }
+  
+  .display-4 {
+    font-size: 4rem;
+  }
+  
+  .lead {
+    font-size: 1.25rem;
+  }
+  
+  .btn-primary {
+    background-color: #2a2a2a;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+  

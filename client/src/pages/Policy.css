@@ -1,0 +1,82 @@
+/* Policy.css */
+.policy-container {
+    background-color: #000;
+    color: #fff;
+    padding: 50px;
+    text-align: center;
+  }
+  
+  .policy-title {
+    font-size: 3em;
+    margin-bottom: 20px;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  .policy-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .policy-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .policy-section {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: calc(50% - 20px); /* Adjust width to account for gap */
+    max-width: 500px;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+  }
+  
+  .policy-icon {
+    font-size: 2.5em;
+    color: #0d6efd;
+    margin-bottom: 15px;
+  }
+  
+  .policy-section h2 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+  }
+  
+  .policy-section p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    font-family: "Poppins", sans-serif;
+    text-align: center;
+  }
+  
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .policy-section {
+      width: 100%;
+    }
+  }
+  
