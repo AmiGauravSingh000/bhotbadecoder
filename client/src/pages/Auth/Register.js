@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../components/Layout/Layout";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import {
   FaUser,
   FaEnvelope,
@@ -10,6 +13,7 @@ import {
 import "./Register.css";
 
 const Register = () => {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -17,9 +21,23 @@ const Register = () => {
   const [address, setAddress] = useState("");
   //form function
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(name, email, password, address, phone);
+    try {
+      const res = await axios.post(
+        `${process.env.REACT_APP_API}/api/v1/auth/register`,
+        { name, email, password, phone, address }
+      );
+      if (res.data.success) {
+        toast.success(res.data.message);
+        navigate("/login");
+      } else {
+        toast.error(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error("Something went wrong !!");
+    }
   };
 
   const backgroundRef = useRef(null);

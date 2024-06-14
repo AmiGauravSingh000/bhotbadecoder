@@ -2,6 +2,8 @@ import React from "react";
 import Header from "./Header";
 import Footer from "./Footer";
 import { Helmet, HelmetProvider } from "react-helmet-async";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Layout = ({
   children,
@@ -22,7 +24,10 @@ const Layout = ({
         </Helmet>
 
         <Header />
-        <main style={{ minHeight: "80vh" }}>{children}</main>
+        <main style={{ minHeight: "80vh" }}>
+          <ToastContainer />
+          {children}
+        </main>
         <Footer />
       </div>
     </HelmetProvider>
