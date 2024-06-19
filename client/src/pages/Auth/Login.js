@@ -1,36 +1,35 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
-import {
-  FaUser,
-  FaEnvelope,
-  FaLock,
-  FaPhone,
-  FaAddressCard,
-} from "react-icons/fa";
-import "./Register.css";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import "./Login.css";
+import { useAuth } from "../../Context/auth";
 
-const Register = () => {
+const Login = () => {
   const navigate = useNavigate();
-  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
-  const [address, setAddress] = useState("");
-  //form function
+  const [auth, setAuth] = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_API}/api/v1/auth/register`,
-        { name, email, password, phone, address }
+        `${process.env.REACT_APP_API}/api/v1/auth/login`,
+        { email, password }
       );
       if (res.data.success) {
         toast.success(res.data.message);
-        navigate("/login");
+        localStorage.setItem("token", res.data.token);
+        setAuth({
+          ...auth,
+          user: res.data.user,
+          token: res.data.token,
+        });
+        localStorage.setItem("auth", JSON.stringify(res.data));
+        navigate("/");
       } else {
         toast.error(res.data.message);
       }
@@ -87,27 +86,11 @@ const Register = () => {
   }, []);
 
   return (
-    <Layout title="Register Page - BBC">
-      <div className="register-container">
+    <Layout title="Login Page - BBC">
+      <div className="login-container">
         <div ref={backgroundRef} className="background"></div>
-        <form className="register-form" onSubmit={handleSubmit}>
-          <h2 className="text-center text-white">Register</h2>
-
-          <div className="form-group">
-            <label htmlFor="name">
-              <FaUser className="icon" /> Name
-            </label>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => {
-                setName(e.target.value);
-              }}
-              id="name"
-              placeholder="Enter your name"
-              required
-            />
-          </div>
+        <form className="login-form" onSubmit={handleSubmit}>
+          <h2 className="text-center text-white">Login</h2>
 
           <div className="form-group">
             <label htmlFor="email">
@@ -115,11 +98,9 @@ const Register = () => {
             </label>
             <input
               type="email"
-              value={email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
               id="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
               required
             />
@@ -133,48 +114,14 @@ const Register = () => {
               type="password"
               id="password"
               value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
               required
             />
           </div>
 
-          <div className="form-group">
-            <label htmlFor="phone">
-              <FaPhone className="icon" /> Phone
-            </label>
-            <input
-              type="tel"
-              id="phone"
-              value={phone}
-              onChange={(e) => {
-                setPhone(e.target.value);
-              }}
-              placeholder="Enter your phone number"
-              required
-            />
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="address">
-              <FaAddressCard className="icon" /> Address
-            </label>
-            <input
-              type="text"
-              value={address}
-              onChange={(e) => {
-                setAddress(e.target.value);
-              }}
-              id="address"
-              placeholder="Enter your address"
-              required
-            />
-          </div>
-
-          <button type="submit" className="register-button">
-            Register
+          <button type="submit" className="login-button">
+            Login
           </button>
         </form>
       </div>
@@ -182,4 +129,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Login;
